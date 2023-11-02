@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -22,12 +23,23 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 	
 	
 	private EntityManager entityManager; 
+	
+	@Value("${spring.data.rest.base-path}")
+	private String basePath;
+	
+	@Value("${allowed.origins}")
+	private String[] theAllowedOrigins;
+	
 	@Autowired 
 	public MyDataRestConfig(EntityManager theEntityManager) { 
 	    entityManager =  theEntityManager; 
 	} 
 	
 	 public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config,CorsRegistry cors) { 
+		 
+		 //configure cors mapping
+		 cors.addMapping(basePath + "/**").allowedOrigins(theAllowedOrigins);
+		 
 		 HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
 
 	        // disable HTTP methods for ProductCategory: PUT, POST and DELETE
