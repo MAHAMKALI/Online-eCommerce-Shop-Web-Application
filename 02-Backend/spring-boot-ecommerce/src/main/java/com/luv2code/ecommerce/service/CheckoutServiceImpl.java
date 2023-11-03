@@ -3,6 +3,8 @@ package com.luv2code.ecommerce.service;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ import com.luv2code.ecommerce.entity.Customer;
 import com.luv2code.ecommerce.entity.Order;
 import com.luv2code.ecommerce.entity.OrderItem;
 
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 
 @Service
 public class CheckoutServiceImpl implements CheckoutService{

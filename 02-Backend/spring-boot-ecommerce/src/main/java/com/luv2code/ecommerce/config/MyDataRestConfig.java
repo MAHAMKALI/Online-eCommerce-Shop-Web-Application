@@ -16,8 +16,8 @@ import com.luv2code.ecommerce.entity.ProductCategory;
 import com.luv2code.ecommerce.entity.Country;
 import com.luv2code.ecommerce.entity.State;
 import com.luv2code.ecommerce.entity.Order;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.metamodel.EntityType;
+import javax.persistence.EntityManager;
+import javax.persistence.metamodel.EntityType;
 
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
