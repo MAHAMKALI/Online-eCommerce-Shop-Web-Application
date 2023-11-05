@@ -22,11 +22,7 @@ import javax.persistence.metamodel.EntityType;
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
 	
-	
 	private EntityManager entityManager; 
-	
-	@Value("${spring.data.rest.base-path}")
-	private String basePath;
 	
 	@Value("${allowed.origins}")
 	private String[] theAllowedOrigins;
@@ -38,9 +34,6 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 	
 	 public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config,CorsRegistry cors) { 
 		 
-		 //configure cors mapping
-		 cors.addMapping(basePath + "/**").allowedOrigins(theAllowedOrigins);
-		 
 		 HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
 
 	        // disable HTTP methods for ProductCategory: PUT, POST and DELETE
@@ -51,6 +44,10 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 	        disableHttpMethods(Order.class, config, theUnsupportedActions);
 	        // call an internal helper method
 	        exposeIds(config);
+	        
+	        // configure cors mapping
+	        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(theAllowedOrigins);
+	        
 	    }
 	 private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
 	        config.getExposureConfiguration()
